@@ -3,10 +3,13 @@ package org.mgb.inventoryservice.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = false)
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final JwtAuthConverter jwtAuthConverter;
 
@@ -31,19 +34,18 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(csrf->csrf.disable())
-                .headers(h->h.frameOptions(fo->fo.disable()))
-                .authorizeHttpRequests(ar->ar.requestMatchers("/**").permitAll())
+                .headers(h->h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+                .authorizeHttpRequests(ar->ar.requestMatchers("/swagger-ui.html","/swagger-ui/**","/v3/**").permitAll())
 
                 //.authorizeHttpRequests(ar->ar.requestMatchers("/h2-console/**").permitAll())
                 //.authorizeHttpRequests(ar->ar.requestMatchers("/api/products/**").hasAuthority("ADMIN"))
-                //.authorizeHttpRequests(ar->ar.requestMatchers("/order-service/**").permitAll())
-                //.authorizeHttpRequests(ar->ar.requestMatchers("/localhost:4200/**").permitAll())
-                //.authorizeHttpRequests(ar->ar.requestMatchers("/api/customers/**").permitAll())
-
-                //.authorizeHttpRequests(ar->ar.anyRequest().authenticated())
-                //.oauth2ResourceServer(o2->o2.jwt(jwt->jwt.jwtAuthenticationConverter(jwtAuthConverter)))
-                .build();
-    }
+               //.authorizeHttpRequests(ar->ar.requestMatchers("/order-service/**").permitAll())
+                .authorizeHttpRequests(ar->ar.requestMatchers("/localhost:4200/**").permitAll())
+               //.authorizeHttpRequests(ar->ar.requestMatchers("/api/customers/**").permitAll())
+              .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+               .oauth2ResourceServer(o2->o2.jwt(jwt->jwt.jwtAuthenticationConverter(jwtAuthConverter)))
+               .build();
+   }
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

@@ -19,14 +19,14 @@ public class ProductServiceImpl implements ProductService{
     ProductRepository productRepository;
     ProductMapperimpl productMapper;
 
-    @Override
-    public Page getAllProducts(int page, int size) {
-        List<Product> products = productRepository.findAll();
-
-
-        return (Page) products.stream().map(product -> productMapper.fromProduct(product)).collect(Collectors.toList());
-
-    }
+//    @Override
+//    public Page getAllProducts(int page, int size) {
+//        List<Product> products = productRepository.findAll();
+//
+//
+//        return (Page) products.stream().map(product -> productMapper.fromProduct(product)).collect(Collectors.toList());
+//
+//    }
 
     @Override
     public List<ProductDTO> getAllProducts() {

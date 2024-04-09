@@ -2,6 +2,8 @@ package org.mgb.inventoryservice.DTOs;
 
 import lombok.*;
 
+import java.util.Set;
+
 
 @Data
 public class ProductDTO {
@@ -11,4 +13,5 @@ public class ProductDTO {
     private double price;
     private int quantity;
     private boolean state;
+
 }

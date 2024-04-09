@@ -2,11 +2,12 @@ package org.mgb.inventoryservice.services;
 
 import org.hibernate.query.Page;
 import org.mgb.inventoryservice.DTOs.ProductDTO;
+import org.mgb.inventoryservice.entities.Product;
 
 import java.util.List;
 
 public interface ProductService {
-    Page getAllProducts(int page, int size);
+
 
     List<ProductDTO> getAllProducts();
 

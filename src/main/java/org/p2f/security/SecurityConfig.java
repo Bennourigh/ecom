@@ -1,0 +1,68 @@
+//package org.p2f.security;
+//
+//
+//
+//import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.security.config.Customizer;
+//import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+//import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+//import org.springframework.security.config.http.SessionCreationPolicy;
+//import org.springframework.security.web.SecurityFilterChain;
+//import org.springframework.web.cors.CorsConfiguration;
+//import org.springframework.web.cors.CorsConfigurationSource;
+//import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+//
+//import java.util.Arrays;
+//import java.util.Collections;
+//
+//
+//@Configuration
+//@EnableWebSecurity
+////@EnableMethodSecurity(prePostEnabled = true)
+//public class SecurityConfig {
+//
+//    private final JwtAuthConverter jwtAuthConverter;
+//
+//    public SecurityConfig(JwtAuthConverter jwtAuthConverter) {
+//        this.jwtAuthConverter = jwtAuthConverter;
+//    }
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+//        return httpSecurity
+//                .cors(Customizer.withDefaults())
+//                .sessionManagement(sm->sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .csrf(AbstractHttpConfigurer::disable)
+//                .headers(h->h.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+//                .authorizeHttpRequests(ar->ar.requestMatchers("/*","/swagger-ui.html","/swagger-ui/**","/v3/**").permitAll())
+//                //.authorizeHttpRequests(ar->ar.requestMatchers("/**").permitAll())
+//                .authorizeHttpRequests(ar->ar.requestMatchers("/localhost:4200/**").permitAll())
+//               // .authorizeHttpRequests(ar->ar.requestMatchers("/localhost:8085/**").permitAll())
+//                //.authorizeHttpRequests(ar->ar.requestMatchers("/api/products/**").hasAuthority("ADMIN"))
+//               //.authorizeHttpRequests(ar->ar.requestMatchers("/products/**").permitAll())
+//                //.authorizeHttpRequests(ar->ar.requestMatchers("/api/customer/**").permitAll())
+//
+//               .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+//               .oauth2ResourceServer(o2->o2.jwt(jwt->jwt.jwtAuthenticationConverter(jwtAuthConverter)))
+//                .build();
+//    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        return getCorsConfigurationSource();
+//    }
+//
+//    static CorsConfigurationSource getCorsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Collections.singletonList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+//        configuration.setAllowedHeaders(Collections.singletonList("*"));
+//        configuration.setExposedHeaders(Collections.singletonList("*"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+//}
